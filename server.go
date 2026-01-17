@@ -27,11 +27,11 @@ type Config struct {
 
 type Server struct {
 	log *slog.Logger
-	cfg Config
+	cfg *Config
 	srv *http.Server
 }
 
-func New(cfg Config, slogLog *slog.Logger, handler http.Handler) *Server {
+func New(slogLog *slog.Logger, cfg *Config, handler http.Handler) *Server {
 	cfg.Addr = net.JoinHostPort(cfg.Host, cfg.Port)
 
 	// не будет проблем из-за того что логер может быть буферезированным
