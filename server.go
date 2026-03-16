@@ -1,4 +1,4 @@
-package http_server
+package httpsrv
 
 import (
 	"context"
