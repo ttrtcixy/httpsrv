@@ -12,17 +12,16 @@ import (
 )
 
 type Config struct {
-	Host              string        `env:"HTTP_HOST,required,notEmpty"`
-	Port              string        `env:"HTTP_PORT,required,notEmpty"`
-	ShutdownTimeout   time.Duration `env:"HTTP_SHUTDOWN_TIME,required,notEmpty"`
-	MaxHeaderBytes    int           `env:"HTTP_MAX_HEADER_BYTES,required,notEmpty"`
-	ReadHeaderTimeout time.Duration `env:"HTTP_READ_HEADER_TIMEOUT,required,notEmpty"`
-	IdleTimeout       time.Duration `env:"HTTP_IDLE_TIMEOUT,required,notEmpty"`
-	WriteTimeout      time.Duration `env:"HTTP_WRITE_TIMEOUT,required,notEmpty"`
-	TLSCertificate    string        `env:"PUBLIC_CERTIFICATE,required,notEmpty"`
-	PrivateKey        string        `env:"PRIVATE_KEY,required,notEmpty"`
-	//MinTLSVersion     float64       `env:"HTTP_TLS_MIN_VERSION,required,notEmpty"`
-	Addr string // Pre-formatted address
+	Host              string
+	Port              string
+	ShutdownTimeout   time.Duration
+	MaxHeaderBytes    int
+	ReadHeaderTimeout time.Duration
+	IdleTimeout       time.Duration
+	WriteTimeout      time.Duration
+	TLSCertificate    string
+	PrivateKey        string
+	Addr 			  string // Pre-formatted address
 }
 
 type Server struct {
