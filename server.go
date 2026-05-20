@@ -21,7 +21,8 @@ type Config struct {
 	WriteTimeout      time.Duration
 	TLSCertificate    string
 	PrivateKey        string
-	Addr 			  string // Pre-formatted address
+	ServerName        string
+	Addr              string // Pre-formatted address
 }
 
 type Server struct {
@@ -41,7 +42,7 @@ func New(slogLog *slog.Logger, cfg *Config, handler http.Handler) *Server {
 		log: slogLog.WithGroup("http_server"),
 	}
 
-	tlsCfg := &tls.Config{MinVersion: tls.VersionTLS13, ServerName: "localhost"}
+	tlsCfg := &tls.Config{MinVersion: tls.VersionTLS13, ServerName: cfg.ServerName}
 
 	srv := &http.Server{
 		Addr:    cfg.Addr,
@@ -78,7 +79,12 @@ func (s *Server) Close(ctx context.Context) error {
 
 	if err := s.srv.Shutdown(ctx); err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
-			s.log.LogAttrs(nil, slog.LevelWarn, "server shutdown timed out, some connections were forced to close", slog.Duration("timeout", s.cfg.ShutdownTimeout))
+			s.log.LogAttrs(
+				nil,
+				slog.LevelWarn,
+				"server shutdown timed out, some connections were forced to close",
+				slog.Duration("timeout", s.cfg.ShutdownTimeout),
+			)
 			return nil
 		}
 
